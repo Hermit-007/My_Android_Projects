@@ -1,0 +1,213 @@
+package com.example.dressstoreformen
+
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
+
+@Composable
+fun HomeUi() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .background(color = colorResource(id = R.color.midnight_blue))
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top Row with Menu, Text, and Search Button
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp) // Padding around the row
+                    .background(color = colorResource(id = R.color.ivory_white)),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween // Space out elements in the row
+            ) {
+                // Menu Icon on the left
+                Buttonn(icon = R.drawable.baseline_menu_24)
+
+                // Text in the center
+                Text(
+                    text = "Naruto's Powerful Charectors",
+                    style = TextStyle(
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.W500,
+                        color = colorResource(id = R.color.midnight_blue)
+                    ),
+                    modifier = Modifier.weight(1f) // Makes sure the text takes remaining space
+                )
+
+                // Search Icon on the right
+                Buttonn(icon = R.drawable.baseline_search_24)
+            }
+
+            // LazyVerticalGrid to show list items
+
+                LazyVerticalGrid(columns = GridCells.Fixed(2),
+                    
+
+                    ) {
+                    items(Data.datalist) { dataItem ->
+                        showdata(data = dataItem) // Show the individual items
+                    }
+                }
+
+        }
+    }
+}
+
+@Composable
+fun Buttonn(
+    @DrawableRes icon: Int,
+    tint: Color = Color.Unspecified
+) {
+    IconButton(onClick = { /* Handle icon click */ }) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = "Icon",
+            tint = tint
+        )
+    }
+}
+
+@Composable
+fun showdata(data: Data.demo) {
+    Card(
+        shape = RoundedCornerShape(9.dp),
+        modifier = Modifier
+            .width(175.dp)
+            .height(300.dp)
+            .padding(vertical = 9.dp, horizontal = 9.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 9.dp, horizontal = 9.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Display image with CircleShape clip
+                Image(
+                    painter = painterResource(id = data.img),
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .size(130.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+
+                // Display the num as a String (converting the integer to string)
+                Text(
+                    text = data.num.toString(), // Convert num (Int) to String
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    ),
+                    modifier = Modifier.padding(top = 8.dp), // Added space between image and text
+                    textAlign = TextAlign.Center // Ensures text is centered
+                )
+
+                // Optionally, display the name as well if needed
+                Text(
+                    text = data.name, // Displaying the name of the item
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    ),
+                    modifier = Modifier.padding(top = 4.dp), // Spacing between name and num
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+}
+
+
+
+//kotlin object 
+
+package com.example.dressstoreformen
+
+import androidx.annotation.DrawableRes
+
+object Data {
+    class demo(
+        @DrawableRes var img:Int,
+        var num:Int,
+        var name:String
+    )
+
+    var datalist = listOf(
+        demo(
+            R.drawable.kaguya,
+            num = 1,
+            name = "Kaguya"
+        ),
+        demo(
+            R.drawable.hashirama,
+            num = 2,
+            name = "Hashirama Senju"
+        ),
+        demo(
+            R.drawable.madara,
+            num = 3,
+            name = "Madara uchiha"
+        ),
+        demo(
+            R.drawable.naruto,
+            num = 4,
+            name = "Naruto Uzumaki"
+        ),
+        demo(
+            R.drawable.sasuke,
+            num = 5,
+            name = "Sasuke Uchiha"
+        ),
+        demo(
+            R.drawable.obito,
+            num = 6,
+            name = "Obito Uchiha"
+        ),
+        demo(
+            R.drawable.jiraya,
+            num = 7,
+            name = "Jiraya"
+        ),
+        demo(
+            R.drawable.pain,
+            num = 8,
+            name = "Pain"
+        ),
+
+
+    )
+}
